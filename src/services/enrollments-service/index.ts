@@ -14,9 +14,17 @@ async function getAddressFromCEP(cep: string) {
   if (!result.data) {
     throw notFoundError();
   }
-
+  console.log(result.data)
   // FIXME: não estamos interessados em todos os campos
-  return result.data;
+  const {bairro, localidade, uf, complemento, logradouro} = result.data
+  const fixedAdress ={
+    bairro,
+    cidade : localidade,
+    uf,
+    complemento,
+    logradouro
+  }
+  return fixedAdress
 }
 
 async function getOneWithAddressByUserId(userId: number): Promise<GetOneWithAddressByUserIdResult> {
